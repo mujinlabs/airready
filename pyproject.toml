@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mujin-airready"
+version = "0.1.0"
+description = "Grade how ready a website is for AI agents & LLM crawlers (llms.txt, AI-bot policy, structured data, SSR content, sitemap)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Mujin Labs" }]
+keywords = ["llms-txt", "ai-crawlers", "seo", "llm", "ai-agents", "structured-data", "website"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/mujinlabs/airready"
+
+[project.scripts]
+airready = "airready.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/airready"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
