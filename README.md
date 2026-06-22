@@ -38,8 +38,8 @@ AI-readiness: https://example.com
 
 This repo also ships the **AI-Readiness Grader** web tool: a URL box that grades any site
 and gives you an embeddable **"AI-Ready" badge** — paste it on your site and it links back
-to your full report. (`/api/scan`, `/api/badge`, `index.html`; deploys on Vercel zero-config,
-installing the engine from PyPI.)
+to your full report. (`/api/scan`, `/api/badge`, `index.html`; deploys on Vercel zero-config;
+the functions are self-contained and stdlib-only, so the deploy has no dependencies.)
 
 ```html
 <a href="https://airready.mujinlabs.com/?url=YOURSITE">

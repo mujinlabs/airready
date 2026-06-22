@@ -1,1 +1,2 @@
-mujin-airready==0.1.0
+# No third-party dependencies — the serverless functions are stdlib-only and
+# self-contained, so the Vercel deploy does not depend on PyPI.
