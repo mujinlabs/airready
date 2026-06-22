@@ -18,7 +18,7 @@ AI_BOTS = ["GPTBot", "ChatGPT-User", "OAI-SearchBot", "ClaudeBot", "Claude-Web",
            "Bytespider", "Applebot-Extended", "Meta-ExternalAgent"]
 
 
-def _get(url, timeout=10, max_bytes=2_000_000):
+def _get(url, timeout=6, max_bytes=2_000_000):
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "*/*"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
