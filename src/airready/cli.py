@@ -7,7 +7,7 @@ import json
 import sys
 
 from . import __version__
-from .core import grade_page
+from .core import grade_page, grade_for
 from .fetch import fetch_site
 
 
@@ -28,6 +28,22 @@ def render(report) -> str:
             out.append(f"          → {c.recommendation}")
     out.append("")
     out.append(f"  Score: {report.score}/100  (grade {report.grade})")
+
+    # Prioritized fix-list: the highest-weight misses first answer the only
+    # question a low scorer has — "what do I fix first for the biggest jump?"
+    misses = sorted((c for c in report.checks if not c.passed),
+                    key=lambda c: c.weight, reverse=True)[:3]
+    if misses:
+        gain = sum(c.weight for c in misses)
+        projected = report.score + gain
+        out.append("")
+        out.append("  Top fixes (most points first):")
+        for c in misses:
+            out.append(f"    +{c.weight:<2} {c.label} → {c.recommendation}")
+        out.append(f"    Fixing these {len(misses)} → ~{projected}/100 "
+                   f"(grade {grade_for(projected)}).")
+        out.append(f"    Re-run `airready scan {report.final_url}` after your "
+                   f"fix to verify the score moved.")
     return "\n".join(out)
 
 

@@ -1,0 +1,15 @@
+# AI-Readiness Grader
+
+> A free tool by Mujin Labs that grades any website on how ready it is for AI agents and LLM crawlers (ChatGPT, Claude, Perplexity). It checks llms.txt, AI-bot policy in robots.txt, structured data, server-rendered content, sitemap, and core metadata, then returns a score and a grade from A to F with a prioritized fix list and an embeddable badge.
+
+## About
+- [AI-Readiness Grader](https://airready.mujinlabs.com/): grade your site free, no signup
+- [Mujin Labs](https://github.com/mujinlabs): tools for the autonomous-agent era
+- [airready (CLI + engine)](https://github.com/mujinlabs/airready): the same grader as an open-source command-line tool
+
+## What it checks
+- llms.txt — the standard this file follows (llmstxt.org)
+- AI-bot policy in robots.txt — GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot
+- structured data — schema.org JSON-LD
+- server-rendered content — many AI crawlers do not execute JavaScript
+- sitemap.xml, page title, meta description, Open Graph, canonical link, h1 heading

@@ -7,6 +7,10 @@
 <meta name="description" content="Grade any website on the signals that decide whether ChatGPT, Claude, Perplexity and AI agents can find, read, and cite it. Free.">
 <meta property="og:title" content="AI-Readiness Grader">
 <meta property="og:description" content="Is your website ready for AI agents & LLM crawlers? Get a free score + badge.">
+<link rel="canonical" href="https://airready.mujinlabs.com/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"AI-Readiness Grader","url":"https://airready.mujinlabs.com/","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Grade any website on how ready it is for AI agents and LLM crawlers — llms.txt, AI-bot policy, structured data, server-rendered content and more.","publisher":{"@type":"Organization","name":"Mujin Labs","url":"https://github.com/mujinlabs"}}
+</script>
 <style>
   :root { color-scheme: light dark; }
   * { box-sizing: border-box; }
@@ -31,10 +35,33 @@
   .mark { font-weight: 700; width: 22px; flex: none; }
   .pass { color: #3fb950; } .fail { color: #f85149; }
   .rec { color: #9aa4af; font-size: 14px; margin-left: 32px; }
+  .fixes { margin: 14px 0 6px; padding: 14px 16px; background: #1c2230;
+           border: 1px solid #30363d; border-radius: 10px; }
+  .fixes h3 { margin: 0 0 8px; font-size: 14px; color: #e6edf3; }
+  .fix { padding: 5px 0; font-size: 14px; }
+  .fix b { color: #d2a8ff; }
+  .fixes .proj { margin-top: 8px; color: #3fb950; font-size: 14px; }
+  .rescan { margin-top: 12px; padding: 8px 14px; font-size: 13px; background: #21262d;
+            border: 1px solid #30363d; color: #e6edf3; border-radius: 8px; cursor: pointer; font-weight: 600; }
+  .rescan:hover { background: #2d333b; }
+  .delta { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .delta.up { color: #3fb950; background: #18261c; }
+  .delta.down { color: #f85149; background: #2a1718; }
+  .delta.same { color: #9aa4af; background: #1c2128; }
   .embed { margin-top: 22px; }
   textarea { width: 100%; height: 78px; background: #0d1117; color: #e6edf3;
              border: 1px solid #30363d; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 12px; }
+  .share { margin-top: 20px; padding: 14px 16px; background: #18261c;
+           border: 1px solid #2ea44f44; border-radius: 10px; }
+  .share h3 { margin: 0 0 10px; font-size: 14px; color: #3fb950; }
+  .sharebtn { display: inline-block; padding: 8px 14px; margin: 0 8px 0 0; font-size: 13px;
+              font-weight: 600; border-radius: 8px; border: 1px solid #30363d; cursor: pointer;
+              background: #21262d; color: #e6edf3; text-decoration: none; }
+  .sharebtn:hover { background: #2d333b; }
   a { color: #79c0ff; }
+  .info { margin-top: 44px; color: #c9d1d9; }
+  .info h2 { font-size: 19px; margin: 0 0 8px; color: #e6edf3; }
+  .info p { margin: 0 0 14px; }
   footer { margin-top: 48px; color: #6e7781; font-size: 14px; }
 </style>
 </head>
@@ -48,6 +75,19 @@
     <button id="b" type="submit">Grade it</button>
   </form>
   <div class="card" id="card"></div>
+  <section class="info">
+    <h2>Why AI-readiness matters</h2>
+    <p>Search is shifting from blue links to answers. When someone asks ChatGPT, Claude, or
+       Perplexity about your product, those models can only mention you if they can find, fetch,
+       and understand your pages. A site shipped as an empty JavaScript shell — with no llms.txt,
+       no structured data, and no stated crawler policy — is effectively invisible to them, no
+       matter how polished it looks in a browser.</p>
+    <p>This grader checks the concrete signals that decide that outcome: an llms.txt summary, an
+       intentional AI-bot policy in robots.txt, schema.org structured data, server-rendered
+       content, a sitemap, and the core metadata crawlers rely on (title, meta description, Open
+       Graph, canonical, and a clear h1). You get a score, a grade from A to F, and a prioritized
+       list of the fixes that move the number most — then re-scan to confirm each change landed.</p>
+  </section>
   <footer>
     By <a href="https://github.com/mujinlabs">Mujin Labs</a> ·
     <a href="https://pypi.org/project/mujin-airready/">CLI</a> ·
@@ -58,25 +98,51 @@
 const COLORS={A:"#2ea44f",B:"#3fb950",C:"#bf8700",D:"#e8590c",F:"#cf222e","?":"#6e7781"};
 const f=document.getElementById('f'),u=document.getElementById('u'),
       b=document.getElementById('b'),card=document.getElementById('card');
-f.addEventListener('submit',async e=>{
-  e.preventDefault();
-  const url=u.value.trim(); if(!url) return;
+// Track the last graded URL+score so a re-scan can show the owner the delta —
+// seeing the score actually rise is what pulls an improver through the loop.
+let lastUrl=null,lastScore=null;
+async function grade(url,isRescan){
+  if(!url) return;
+  const prev=(isRescan&&url===lastUrl)?lastScore:null;
   b.disabled=true; b.textContent='Grading…'; card.style.display='block';
-  card.innerHTML='<p class="score">Fetching and grading…</p>';
+  card.innerHTML='<p class="score">'+(isRescan?'Re-scanning':'Fetching and grading')+'…</p>';
   try{
     const r=await fetch('/api/scan?url='+encodeURIComponent(url));
     const d=await r.json();
     if(d.error){ card.innerHTML='<p class="fail">Could not grade: '+d.error+'</p>'; return; }
-    render(d);
+    render(d,prev);
+    lastUrl=url; lastScore=d.score;
   }catch(err){ card.innerHTML='<p class="fail">Error: '+err+'</p>'; }
   finally{ b.disabled=false; b.textContent='Grade it'; }
-});
+}
+f.addEventListener('submit',e=>{ e.preventDefault(); grade(u.value.trim(),false); });
 function esc(s){return (s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function render(d){
+function render(d,prevScore){
   const g=d.grade, color=COLORS[g]||COLORS['?'];
+  // Show the delta vs the previous scan so an improver sees their fix land.
+  let delta='';
+  if(prevScore!=null){
+    const diff=d.score-prevScore;
+    const cls=diff>0?'up':diff<0?'down':'same';
+    const txt=diff>0?`▲ +${diff} since last scan`:diff<0?`▼ ${diff} since last scan`:'no change yet — fix not detected';
+    delta=` <span class="delta ${cls}">${txt}</span>`;
+  }
   let h=`<div class="scorerow"><div class="grade" style="background:${color}">${g}</div>
-    <div><div style="font-size:20px;font-weight:700">${d.score}/100</div>
+    <div><div style="font-size:20px;font-weight:700">${d.score}/100${delta}</div>
     <div class="score">${esc(d.final_url)}</div></div></div>`;
+  // Top fixes: rank failed checks by weight so the owner knows what to fix
+  // first for the biggest jump — turns an F into an actionable re-scan loop.
+  const misses=d.checks.filter(c=>!c.passed).sort((a,b)=>b.weight-a.weight).slice(0,3);
+  if(misses.length){
+    const proj=d.score+misses.reduce((s,c)=>s+c.weight,0);
+    const pg=proj>=90?'A':proj>=75?'B':proj>=60?'C':proj>=40?'D':'F';
+    h+=`<div class="fixes"><h3>⚡ Top fixes — biggest score gains first</h3>`;
+    for(const c of misses)
+      h+=`<div class="fix"><b>+${c.weight}</b> ${esc(c.label)} — ${esc(c.recommendation)}</div>`;
+    h+=`<div class="proj">→ Fixing these ${misses.length} would lift you to ~${proj}/100 (grade ${pg}).</div>`;
+    // Re-scan CTA: closes the improver loop (fix → verify → repeat → A/B → badge).
+    h+=`<button type="button" class="rescan" id="rescan">↻ Made a change? Re-scan to verify</button></div>`;
+  }
   for(const c of d.checks){
     h+=`<div class="check"><span class="mark ${c.passed?'pass':'fail'}">${c.passed?'✓':'✕'}</span>
         <span><b>${esc(c.label)}</b> <span class="score">+${c.weight} · ${esc(c.detail)}</span>
@@ -89,8 +155,31 @@ function render(d){
   h+=`<div class="embed"><b>Embed your badge</b> (links back to this report):<br>
       <img src="${img}" alt="badge" style="margin:8px 0"><br>
       <textarea readonly onclick="this.select()">${esc(snippet)}</textarea></div>`;
+  // Spreaders (A/B): a one-click share turns a good grade into a backlink/post.
+  // Nobody brags about an F, so only surface this for the grades people share.
+  if(g==='A'||g==='B'){
+    const boast=`My site scored ${g} (${d.score}/100) on AI-readiness — is yours ready for ChatGPT, Claude & AI agents?`;
+    const xUrl='https://twitter.com/intent/tweet?text='+encodeURIComponent(boast)+'&url='+encodeURIComponent(link);
+    h+=`<div class="share"><h3>🎉 Grade ${g} — share it</h3>
+        <a class="sharebtn" href="${esc(xUrl)}" target="_blank" rel="noopener">𝕏 Share on X</a>
+        <button type="button" class="sharebtn" id="copylink">🔗 Copy link to this report</button></div>`;
+  }
   card.innerHTML=h;
+  const rs=document.getElementById('rescan');
+  if(rs) rs.addEventListener('click',()=>grade(d.url,true));
+  const cl=document.getElementById('copylink');
+  if(cl) cl.addEventListener('click',()=>{
+    navigator.clipboard.writeText(link).then(()=>{ cl.textContent='✓ Copied!';
+      setTimeout(()=>{ cl.textContent='🔗 Copy link to this report'; },1500); });
+  });
 }
+// Deep-link: clicking a badge backlink or a shared link lands on /?url=<site>.
+// Auto-grade it on load so the visitor sees the promised report immediately
+// (otherwise the badge backlink — the whole distribution loop — dead-ends on an empty form).
+(function(){
+  const q=new URLSearchParams(location.search).get('url');
+  if(q){ u.value=q; grade(q,false); }
+})();
 </script>
 </body>
 </html>
