@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mujin-airready"
-version = "0.1.0"
+version = "0.1.1"
 description = "Grade how ready a website is for AI agents & LLM crawlers (llms.txt, AI-bot policy, structured data, SSR content, sitemap)."
 readme = "README.md"
 requires-python = ">=3.9"
