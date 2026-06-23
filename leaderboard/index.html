@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How AI-ready is the web? — live AI-readiness grades for popular sites</title>
+<meta name="description" content="We grade popular websites live on how ready they are for AI agents and LLM crawlers (ChatGPT, Claude, Perplexity) — scored on llms.txt, AI-bot policy, structured data, server-rendered content and more. See the leaderboard and grade your own site free.">
+<link rel="canonical" href="https://airready.mujinlabs.com/leaderboard">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How AI-ready is the web?">
+<meta property="og:description" content="Live AI-readiness grades for popular sites — llms.txt, AI-bot policy, structured data &amp; more. Grade yours free.">
+<meta property="og:url" content="https://airready.mujinlabs.com/leaderboard">
+<meta property="og:image" content="https://airready.mujinlabs.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://airready.mujinlabs.com/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How AI-ready is the web?","author":{"@type":"Organization","name":"Mujin Labs"},"publisher":{"@type":"Organization","name":"Mujin Labs"},"datePublished":"2026-06-23","description":"Live AI-readiness grades for popular websites, measured by the AI-Readiness Grader."}
+</script>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0;
+         background: #0d1117; color: #e6edf3; line-height: 1.6; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 56px 20px 90px; }
+  h1 { font-size: 34px; margin: 0 0 10px; }
+  p.sub { color: #9aa4af; margin: 0 0 8px; font-size: 18px; }
+  .row { display: flex; align-items: center; gap: 16px; padding: 12px 14px; border-radius: 10px; }
+  .row:nth-child(even) { background: #161b22; }
+  .grade { font-size: 22px; font-weight: 800; width: 44px; height: 44px; border-radius: 9px;
+           display: grid; place-items: center; color: #fff; flex: none; }
+  .dom { font-weight: 600; font-size: 18px; flex: 1; }
+  .dom a { color: inherit; text-decoration: none; }
+  .dom a:hover { text-decoration: underline; }
+  .num { color: #9aa4af; font-variant-numeric: tabular-nums; }
+  .pending .grade { background: #21262d; color: #6e7781; }
+  .pending .num { color: #6e7781; }
+  .cta { margin-top: 40px; padding: 22px; background: #161b22; border: 1px solid #30363d;
+         border-radius: 12px; text-align: center; }
+  .cta a { display: inline-block; margin-top: 10px; padding: 12px 22px; background: #6e40c9;
+           color: #fff; border-radius: 8px; text-decoration: none; font-weight: 700; }
+  a { color: #79c0ff; }
+  .note { color: #6e7781; font-size: 14px; margin: 10px 0 0; }
+  .meta { color: #6e7781; font-size: 14px; margin-top: 36px; }
+  h2 { font-size: 20px; margin: 40px 0 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>How AI-ready is the web?</h1>
+  <p class="sub">We grade popular websites on how easily AI agents and LLM crawlers
+     (ChatGPT, Claude, Perplexity) can find, read, and cite them.</p>
+  <p class="sub">The spread is wide — and some big names score surprisingly low.</p>
+
+  <h2>The leaderboard</h2>
+  <div id="board"></div>
+  <p class="note" id="boardnote">Grading these sites live… each grade below is computed
+     by the grader right now, in your browser — never a stale screenshot.</p>
+  <noscript>
+    <p class="note">This leaderboard grades each site live when the page loads, which needs
+       JavaScript. You can still <a href="https://airready.mujinlabs.com/">grade any site
+       directly</a> — every grade is produced by the same open grader.</p>
+  </noscript>
+
+  <h2>What we measured</h2>
+  <p>Each site is scored on the concrete signals that decide whether an LLM crawler can use it:
+     an <a href="https://llmstxt.org">llms.txt</a> summary, an intentional AI-bot policy in
+     robots.txt (GPTBot, ClaudeBot, Google-Extended, PerplexityBot), schema.org structured data,
+     server-rendered content (many AI crawlers don't run JavaScript), a sitemap, and core
+     metadata. The result is a score out of 100 and a grade from A to F.</p>
+  <p>Notably, a site can look perfect in a browser and still score an F: if its content only
+     appears after JavaScript runs, or it has no structured data and no llms.txt, AI models
+     simply can't read it. Because the grades here are measured live, they reflect each site's
+     homepage at the moment you loaded this page — re-load to re-grade.</p>
+
+  <div class="cta">
+    <strong>Is your site ready for AI?</strong><br>
+    <a href="https://airready.mujinlabs.com/">Grade your site free →</a>
+  </div>
+
+  <p class="meta">Measured live with the
+     <a href="https://airready.mujinlabs.com/">AI-Readiness Grader</a> by
+     <a href="https://github.com/mujinlabs">Mujin Labs</a>. Scores reflect each site's homepage
+     at time of measurement and may change.</p>
+</div>
+<script>
+// Curated set of well-known sites. We never hard-code their grades — every number shown is
+// produced by the live grader (/api/scan, same engine as the homepage) when this page loads,
+// so the leaderboard can never drift out of sync with what the tool actually reports.
+const SITES=["cloudflare.com","stripe.com","vercel.com","shopify.com","github.com",
+  "nytimes.com","wikipedia.org","mozilla.org","anthropic.com","openai.com",
+  "notion.so","airready.mujinlabs.com"];
+const COLORS={A:"#2ea44f",B:"#3fb950",C:"#bf8700",D:"#e8590c",F:"#cf222e","?":"#6e7781"};
+const board=document.getElementById('board'), note=document.getElementById('boardnote');
+function esc(s){return (s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+// Grade one site via the same-origin scan API (the API does the cross-site fetch server-side,
+// so there is no CORS problem — identical to the homepage's grade() call).
+async function gradeOne(dom){
+  try{
+    const r=await fetch('/api/scan?url='+encodeURIComponent(dom));
+    const d=await r.json();
+    if(d.error||typeof d.score!=='number') return {dom, score:null, grade:'?'};
+    return {dom, score:d.score, grade:d.grade};
+  }catch(e){ return {dom, score:null, grade:'?'}; }
+}
+function render(results){
+  // Graded sites first (highest score first); un-gradeable ones drop to the bottom.
+  const done=results.filter(x=>x.score!=null).sort((a,b)=>b.score-a.score);
+  const failed=results.filter(x=>x.score==null);
+  let h='';
+  for(const x of done.concat(failed)){
+    const color=COLORS[x.grade]||COLORS['?'];
+    const num=x.score!=null?(x.score+'/100'):'—';
+    const link='https://airready.mujinlabs.com/?url='+encodeURIComponent(x.dom);
+    h+=`<div class="row"><div class="grade" style="background:${color}">${esc(x.grade)}</div>`+
+       `<div class="dom"><a href="${esc(link)}">${esc(x.dom)}</a></div>`+
+       `<div class="num">${esc(num)}</div></div>`;
+  }
+  board.innerHTML=h;
+}
+// Simple concurrency pool so we don't fire a dozen serverless scans in one burst.
+async function run(){
+  const results=[]; let i=0;
+  async function worker(){ while(i<SITES.length){ const d=SITES[i++]; results.push(await gradeOne(d)); render(results); } }
+  await Promise.all([worker(),worker(),worker(),worker()]);
+  const graded=results.filter(x=>x.score!=null).length;
+  note.textContent=`Graded ${graded} sites live with the AI-Readiness Grader. Re-load this page to re-grade — every score is measured fresh, never cached.`;
+}
+run();
+</script>
+</body>
+</html>
