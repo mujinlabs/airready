@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why AI crawlers can't read your JavaScript site (and how to fix it) — airready</title>
+<meta name="description" content="Most AI crawlers don't run JavaScript, so a client-rendered SPA looks empty to them. Learn how server-side rendering (SSR), static generation (SSG), and prerendering make your content visible to ChatGPT, Claude and Perplexity.">
+<link rel="canonical" href="https://airready.mujinlabs.com/guides/server-rendered">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why AI crawlers can't read your JavaScript site">
+<meta property="og:description" content="Most AI crawlers don't run JS. How SSR/SSG/prerendering make your content visible to LLMs.">
+<meta property="og:url" content="https://airready.mujinlabs.com/guides/server-rendered">
+<meta property="og:image" content="https://airready.mujinlabs.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://airready.mujinlabs.com/og.png">
+<style>
+  :root{color-scheme:dark}*{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:#0d1117;color:#e6edf3;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 20px 90px}
+  h1{font-size:30px;margin:0 0 6px}h2{font-size:21px;margin:34px 0 10px}
+  .crumb{color:#6e7781;font-size:14px;margin-bottom:18px}
+  .weight{display:inline-block;background:#1c2230;border:1px solid #30363d;color:#9aa4af;font-size:13px;padding:2px 10px;border-radius:20px;margin-bottom:16px}
+  pre{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;overflow:auto;font-size:13px;line-height:1.5}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  a{color:#79c0ff}p{margin:0 0 14px}ul{margin:0 0 14px;padding-left:22px}li{margin:4px 0}
+  .cta{margin-top:36px;padding:20px;background:#161b22;border:1px solid #30363d;border-radius:12px;text-align:center}
+  .cta a{display:inline-block;margin-top:8px;padding:11px 20px;background:#6e40c9;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+  footer{margin-top:44px;color:#6e7781;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/guides">Guides</a> / server-rendered content</div>
+  <h1>Make your content visible without JavaScript</h1>
+  <div class="weight">Worth +10 points · the difference between readable and invisible</div>
+
+  <p>Open your site, then "View source" (the raw HTML the server sends, before JavaScript runs).
+     If you mostly see an empty <code>&lt;div id="root"&gt;&lt;/div&gt;</code> and your real text
+     only appears after scripts execute, your content is <strong>client-rendered</strong>.
+     Browsers run that JS — but <strong>many AI crawlers don't</strong>. To them, your page is
+     blank, no matter how polished it looks to a human.</p>
+
+  <h2>The fix: send real HTML from the server</h2>
+  <p>You want your main content present in that initial HTML response. Three common approaches:</p>
+  <ul>
+    <li><strong>Static generation (SSG)</strong> — pre-build pages to HTML at deploy time. Best
+        for content that doesn't change per request (marketing, docs, blogs). Frameworks:
+        Next.js, Astro, Hugo, Eleventy, SvelteKit.</li>
+    <li><strong>Server-side rendering (SSR)</strong> — render HTML on each request. Best for
+        dynamic/personalized pages. Next.js, Nuxt, Remix, SvelteKit.</li>
+    <li><strong>Prerendering</strong> — keep your SPA but serve a pre-rendered HTML snapshot to
+        bots (e.g. Prerender.io, or your framework's static export for key routes). The pragmatic
+        retrofit when you can't rewrite the app.</li>
+  </ul>
+
+  <h2>If you're on a plain SPA today</h2>
+  <p>The fastest win is to move your highest-value pages (homepage, key landing/product/docs
+     pages) to static generation, even if the rest of the app stays client-rendered. Those are
+     the pages LLMs most need to read. At minimum, ensure the homepage ships meaningful text in
+     its initial HTML.</p>
+
+  <div class="cta">
+    <strong>Shipped server-rendered content?</strong><br>
+    <a href="https://airready.mujinlabs.com/">Re-grade your site →</a>
+  </div>
+  <footer>
+    <a href="/guides">← All guides</a> · by <a href="https://github.com/mujinlabs">Mujin Labs</a> ·
+    part of the free <a href="https://airready.mujinlabs.com/">AI-Readiness Grader</a>
+  </footer>
+</div>
+</body>
+</html>

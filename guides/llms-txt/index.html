@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to add an llms.txt file (with a copy-paste template) — airready</title>
+<meta name="description" content="A practical guide to llms.txt: what it is, exactly what to put in it, where to place it, and how to verify it. Includes a copy-paste template for ChatGPT, Claude and Perplexity.">
+<link rel="canonical" href="https://airready.mujinlabs.com/guides/llms-txt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to add an llms.txt file (with template)">
+<meta property="og:description" content="What llms.txt is, exactly what to put in it, and where to place it. Copy-paste template included.">
+<meta property="og:url" content="https://airready.mujinlabs.com/guides/llms-txt">
+<meta property="og:image" content="https://airready.mujinlabs.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://airready.mujinlabs.com/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"How to add an llms.txt file","description":"Create and publish an llms.txt file so LLMs can understand your site.","step":[{"@type":"HowToStep","name":"Create the file","text":"Create a plain-text file named llms.txt in Markdown."},{"@type":"HowToStep","name":"Place it at the root","text":"Serve it at https://yourdomain.com/llms.txt."},{"@type":"HowToStep","name":"Verify","text":"Re-scan your site to confirm it is detected."}]}
+</script>
+<style>
+  :root{color-scheme:dark}*{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:#0d1117;color:#e6edf3;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 20px 90px}
+  h1{font-size:30px;margin:0 0 6px}h2{font-size:21px;margin:34px 0 10px}
+  .crumb{color:#6e7781;font-size:14px;margin-bottom:18px}
+  .weight{display:inline-block;background:#1c2230;border:1px solid #30363d;color:#9aa4af;font-size:13px;padding:2px 10px;border-radius:20px;margin-bottom:16px}
+  pre{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;overflow:auto;font-size:13px;line-height:1.5}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  a{color:#79c0ff}p{margin:0 0 14px}
+  .cta{margin-top:36px;padding:20px;background:#161b22;border:1px solid #30363d;border-radius:12px;text-align:center}
+  .cta a{display:inline-block;margin-top:8px;padding:11px 20px;background:#6e40c9;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+  footer{margin-top:44px;color:#6e7781;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/guides">Guides</a> / llms.txt</div>
+  <h1>How to add an <code>llms.txt</code> file</h1>
+  <div class="weight">Worth +25 points on your AI-readiness score — the single biggest signal</div>
+
+  <p><code>llms.txt</code> is an emerging standard (<a href="https://llmstxt.org">llmstxt.org</a>)
+     that gives large language models a concise, curated summary of your site — the way
+     <code>robots.txt</code> guides crawlers and <code>sitemap.xml</code> lists your pages.
+     When ChatGPT, Claude, or Perplexity look at your domain, an <code>llms.txt</code> tells
+     them what you do and where the important content is, in plain Markdown they parse easily.</p>
+
+  <h2>1. Create the file</h2>
+  <p>It's a plain-text Markdown file: an <code>#</code> H1 with your site name, a
+     <code>&gt;</code> blockquote one-paragraph summary, then sections of links. Here's a
+     template you can adapt:</p>
+  <pre><code># Your Company
+
+&gt; One or two sentences on what your company does and who it's for. Be concrete:
+&gt; the product, the audience, the core value. This is the summary an LLM will read first.
+
+## Docs
+- [Getting started](https://example.com/docs/start): set up in 5 minutes
+- [API reference](https://example.com/docs/api): full endpoint list
+
+## Product
+- [Pricing](https://example.com/pricing): plans and limits
+- [Changelog](https://example.com/changelog): what's new
+
+## About
+- [Company](https://example.com/about): team and mission
+- [Contact](https://example.com/contact): how to reach us</code></pre>
+  <p>Optionally also publish <code>/llms-full.txt</code> with the full text of your key pages
+     inlined, for models that want the complete content in one fetch.</p>
+
+  <h2>2. Place it at your site root</h2>
+  <p>It must be reachable at <code>https://yourdomain.com/llms.txt</code> — the root, exactly
+     like <code>robots.txt</code>. On most stacks, drop <code>llms.txt</code> into the folder
+     your server treats as the web root (e.g. <code>public/</code>, <code>static/</code>, or the
+     site root). Make sure it returns plain text, not your app's HTML 404 page.</p>
+
+  <h2>3. Verify it</h2>
+  <p>Open <code>https://yourdomain.com/llms.txt</code> in a browser — you should see the raw
+     Markdown, not your homepage. Then re-grade your site to confirm the +25 landed.</p>
+
+  <div class="cta">
+    <strong>Added your llms.txt?</strong><br>
+    <a href="https://airready.mujinlabs.com/">Re-grade your site →</a>
+  </div>
+
+  <footer>
+    <a href="/guides">← All guides</a> · by
+    <a href="https://github.com/mujinlabs">Mujin Labs</a> ·
+    part of the free <a href="https://airready.mujinlabs.com/">AI-Readiness Grader</a>
+  </footer>
+</div>
+</body>
+</html>

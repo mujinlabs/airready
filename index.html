@@ -97,6 +97,7 @@
   </section>
   <footer>
     By <a href="https://github.com/mujinlabs">Mujin Labs</a> ·
+    <a href="/guides">Guides</a> ·
     <a href="/leaderboard">How AI-ready is the web?</a> ·
     <a href="https://pypi.org/project/mujin-airready/">CLI</a> ·
     checks llms.txt, AI-bot policy, structured data, SSR content &amp; more.
@@ -125,6 +126,10 @@ async function grade(url,isRescan){
 }
 f.addEventListener('submit',e=>{ e.preventDefault(); grade(u.value.trim(),false); });
 function esc(s){return (s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+// Deep-dive guides for the fixes that have a detailed how-to page. The result's
+// recommendation tells you WHAT to fix; the guide link tells you exactly HOW.
+const GUIDES={llms_txt:'/guides/llms-txt',structured_data:'/guides/structured-data',robots_ai:'/guides/robots-ai',ssr_content:'/guides/server-rendered'};
+function guide(id){return GUIDES[id]?` <a href="${GUIDES[id]}">How to fix →</a>`:'';}
 function render(d,prevScore){
   const g=d.grade, color=COLORS[g]||COLORS['?'];
   // Show the delta vs the previous scan so an improver sees their fix land.
@@ -146,7 +151,7 @@ function render(d,prevScore){
     const pg=proj>=90?'A':proj>=75?'B':proj>=60?'C':proj>=40?'D':'F';
     h+=`<div class="fixes"><h3>⚡ Top fixes — biggest score gains first</h3>`;
     for(const c of misses)
-      h+=`<div class="fix"><b>+${c.weight}</b> ${esc(c.label)} — ${esc(c.recommendation)}</div>`;
+      h+=`<div class="fix"><b>+${c.weight}</b> ${esc(c.label)} — ${esc(c.recommendation)}${guide(c.id)}</div>`;
     h+=`<div class="proj">→ Fixing these ${misses.length} would lift you to ~${proj}/100 (grade ${pg}).</div>`;
     // Re-scan CTA: closes the improver loop (fix → verify → repeat → A/B → badge).
     h+=`<button type="button" class="rescan" id="rescan">↻ Made a change? Re-scan to verify</button></div>`;
@@ -154,7 +159,7 @@ function render(d,prevScore){
   for(const c of d.checks){
     h+=`<div class="check"><span class="mark ${c.passed?'pass':'fail'}">${c.passed?'✓':'✕'}</span>
         <span><b>${esc(c.label)}</b> <span class="score">+${c.weight} · ${esc(c.detail)}</span>
-        ${c.passed?'':`<div class="rec">→ ${esc(c.recommendation)}</div>`}</span></div>`;
+        ${c.passed?'':`<div class="rec">→ ${esc(c.recommendation)}${guide(c.id)}</div>`}</span></div>`;
   }
   const origin=location.origin;
   const link=origin+'/?url='+encodeURIComponent(d.url);
