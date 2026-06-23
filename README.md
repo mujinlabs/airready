@@ -23,6 +23,17 @@ AI-readiness: https://example.com
   Score: 48/100  (grade D)
 ```
 
+### Gate it in CI
+
+`airready scan` exits non-zero when the site falls below a bar, so a nightly job or a
+pre-deploy step can guard AI-readiness like any other check:
+
+```bash
+airready scan https://yoursite.com --min-grade B   # or --min-score 75
+```
+
+Wrapped as a GitHub Action: **[airready-action](https://github.com/mujinlabs/airready-action)**.
+
 ## What it checks
 
 | Signal | Why it matters |

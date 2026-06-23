@@ -47,6 +47,25 @@ def render(report) -> str:
     return "\n".join(out)
 
 
+# A>B>C>D>F — higher rank is better, so a CI gate can ask "no worse than B".
+_GRADE_RANK = {"A": 4, "B": 3, "C": 2, "D": 1, "F": 0}
+
+
+def gate(report, min_score, min_grade):
+    """Evaluate CI thresholds against a graded report.
+
+    Returns (exit_code, messages). exit_code is 1 (fail the build) if the
+    site scores below --min-score or grades below --min-grade, else 0. Pure
+    so it's testable without a network fetch.
+    """
+    msgs = []
+    if min_score is not None and report.score < min_score:
+        msgs.append(f"score {report.score}/100 is below --min-score {min_score}")
+    if min_grade and _GRADE_RANK[report.grade] < _GRADE_RANK[min_grade]:
+        msgs.append(f"grade {report.grade} is below --min-grade {min_grade}")
+    return (1 if msgs else 0, msgs)
+
+
 def main(argv: list[str] | None = None) -> int:
     _utf8()
     parser = argparse.ArgumentParser(
@@ -58,6 +77,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("url", help="website URL")
     p.add_argument("--json", action="store_true", help="machine-readable output")
     p.add_argument("--timeout", type=float, default=12.0)
+    # CI gate: exit 1 when the live site regresses below a threshold, so a
+    # nightly/deploy workflow can guard AI-readiness like any other check.
+    p.add_argument("--min-score", type=int, default=None, metavar="N",
+                   help="exit 1 if the score is below N (0-100)")
+    p.add_argument("--min-grade", choices=list(_GRADE_RANK), default=None,
+                   help="exit 1 if the grade is below this (A best, F worst)")
 
     args = parser.parse_args(argv)
     if args.command != "scan":
@@ -70,7 +95,10 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     report = grade_page(page)
     print(json.dumps(report.to_dict(), indent=2) if args.json else render(report))
-    return 0
+    code, msgs = gate(report, args.min_score, args.min_grade)
+    for m in msgs:
+        print(f"airready: {m}", file=sys.stderr)
+    return code
 
 
 if __name__ == "__main__":
