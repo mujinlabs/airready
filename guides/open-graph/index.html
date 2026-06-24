@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add Open Graph tags for rich AI and social previews (copy-paste) — airready</title>
+<meta name="description" content="Open Graph (og:) tags control how your link looks when shared or previewed by AI agents, Slack, X, LinkedIn and iMessage. Copy-paste the full set of og: and twitter: tags.">
+<link rel="canonical" href="https://airready.mujinlabs.com/guides/open-graph">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Add Open Graph tags for rich previews">
+<meta property="og:description" content="Control how your link looks when shared or previewed. Copy-paste the full set of og: and twitter: tags.">
+<meta property="og:url" content="https://airready.mujinlabs.com/guides/open-graph">
+<meta property="og:image" content="https://airready.mujinlabs.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://airready.mujinlabs.com/og.png">
+<style>
+  :root{color-scheme:dark}*{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:#0d1117;color:#e6edf3;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 20px 90px}
+  h1{font-size:30px;margin:0 0 6px}h2{font-size:21px;margin:34px 0 10px}
+  .crumb{color:#6e7781;font-size:14px;margin-bottom:18px}
+  .weight{display:inline-block;background:#1c2230;border:1px solid #30363d;color:#9aa4af;font-size:13px;padding:2px 10px;border-radius:20px;margin-bottom:16px}
+  pre{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;overflow:auto;font-size:13px;line-height:1.5}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  a{color:#79c0ff}p{margin:0 0 14px}table{border-collapse:collapse;width:100%;font-size:14px}
+  td,th{border-bottom:1px solid #21262d;padding:8px 6px;text-align:left;vertical-align:top}
+  .cta{margin-top:36px;padding:20px;background:#161b22;border:1px solid #30363d;border-radius:12px;text-align:center}
+  .cta a{display:inline-block;margin-top:8px;padding:11px 20px;background:#6e40c9;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+  footer{margin-top:44px;color:#6e7781;font-size:14px}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/guides">Guides</a> / Open Graph</div>
+  <h1>Open Graph tags for rich previews</h1>
+  <div class="weight">Worth +8 points · controls how your link looks when shared</div>
+
+  <p>Open Graph (<code>og:</code>) tags tell other tools what to show when your link is
+     shared or unfurled — a title, a summary and an image instead of a bare URL. AI agents,
+     Slack, X, LinkedIn, Discord and iMessage all read them. They also give machines a clean,
+     structured copy of what each page is about.</p>
+
+  <h2>Copy-paste: the full set</h2>
+  <p>Inside <code>&lt;head&gt;</code>, per page:</p>
+  <pre><code>&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Your page title"&gt;
+&lt;meta property="og:description" content="A one-sentence summary of the page."&gt;
+&lt;meta property="og:url" content="https://yourdomain.com/this-page"&gt;
+&lt;meta property="og:image" content="https://yourdomain.com/og.png"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:image" content="https://yourdomain.com/og.png"&gt;</code></pre>
+
+  <h2>About the image</h2>
+  <table>
+    <tr><th>Tip</th><th>Why</th></tr>
+    <tr><td>Use <strong>1200×630</strong> px</td><td>The standard ratio every platform crops to</td></tr>
+    <tr><td>Use an <strong>absolute</strong> URL</td><td>Relative paths often fail to unfurl</td></tr>
+    <tr><td>Keep it under ~1&nbsp;MB</td><td>Large images get skipped by some scrapers</td></tr>
+  </table>
+  <p>At minimum airready looks for <code>og:title</code> or <code>og:description</code> — but
+     shipping the full set above gives you the rich card everywhere.</p>
+
+  <div class="cta">
+    <strong>Added your Open Graph tags?</strong><br>
+    <a href="https://airready.mujinlabs.com/">Re-grade your site →</a>
+  </div>
+  <footer>
+    <a href="/guides">← All guides</a> · by <a href="https://github.com/mujinlabs">Mujin Labs</a> ·
+    part of the free <a href="https://airready.mujinlabs.com/">AI-Readiness Grader</a>
+  </footer>
+</div>
+</body>
+</html>

@@ -7,4 +7,10 @@
   <url><loc>https://airready.mujinlabs.com/guides/structured-data</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://airready.mujinlabs.com/guides/robots-ai</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://airready.mujinlabs.com/guides/server-rendered</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airready.mujinlabs.com/guides/sitemap</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://airready.mujinlabs.com/guides/page-title</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://airready.mujinlabs.com/guides/meta-description</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://airready.mujinlabs.com/guides/open-graph</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://airready.mujinlabs.com/guides/canonical</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://airready.mujinlabs.com/guides/h1</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>

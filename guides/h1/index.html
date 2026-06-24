@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use one clear h1 heading so crawlers know the topic (with examples) — airready</title>
+<meta name="description" content="A single, descriptive <h1> states the main topic of a page in the body itself — the heading AI crawlers and screen readers anchor to. How to use it, with examples.">
+<link rel="canonical" href="https://airready.mujinlabs.com/guides/h1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use one clear h1 heading per page">
+<meta property="og:description" content="A single descriptive h1 states the page topic in the body. How to use it, with examples.">
+<meta property="og:url" content="https://airready.mujinlabs.com/guides/h1">
+<meta property="og:image" content="https://airready.mujinlabs.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://airready.mujinlabs.com/og.png">
+<style>
+  :root{color-scheme:dark}*{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:#0d1117;color:#e6edf3;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 20px 90px}
+  h1{font-size:30px;margin:0 0 6px}h2{font-size:21px;margin:34px 0 10px}
+  .crumb{color:#6e7781;font-size:14px;margin-bottom:18px}
+  .weight{display:inline-block;background:#1c2230;border:1px solid #30363d;color:#9aa4af;font-size:13px;padding:2px 10px;border-radius:20px;margin-bottom:16px}
+  pre{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;overflow:auto;font-size:13px;line-height:1.5}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  a{color:#79c0ff}p{margin:0 0 14px}table{border-collapse:collapse;width:100%;font-size:14px}
+  td,th{border-bottom:1px solid #21262d;padding:8px 6px;text-align:left;vertical-align:top}
+  .cta{margin-top:36px;padding:20px;background:#161b22;border:1px solid #30363d;border-radius:12px;text-align:center}
+  .cta a{display:inline-block;margin-top:8px;padding:11px 20px;background:#6e40c9;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+  footer{margin-top:44px;color:#6e7781;font-size:14px}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/guides">Guides</a> / h1 heading</div>
+  <h1>One clear <code>&lt;h1&gt;</code> per page</h1>
+  <div class="weight">Worth +3 points · states the page's topic in the body</div>
+
+  <p>The <code>&lt;h1&gt;</code> is the main on-page heading — the visible title in the body,
+     distinct from the <code>&lt;title&gt;</code> tag in the head. It tells AI crawlers,
+     search engines and screen readers, in the content itself, what this page is about. Each
+     page should have exactly one.</p>
+
+  <h2>Copy-paste: where it goes</h2>
+  <p>At the top of your main content:</p>
+  <pre><code>&lt;body&gt;
+  &lt;h1&gt;AI-Readiness Grader&lt;/h1&gt;
+  &lt;p&gt;Score any website for how ready it is for AI crawlers…&lt;/p&gt;
+&lt;/body&gt;</code></pre>
+
+  <h2>Common mistakes</h2>
+  <table>
+    <tr><th>Avoid</th><th>Prefer</th></tr>
+    <tr><td>No <code>&lt;h1&gt;</code> at all (text styled big with CSS)</td><td>A real <code>&lt;h1&gt;</code> element</td></tr>
+    <tr><td>Several <code>&lt;h1&gt;</code>s on one page</td><td>One <code>&lt;h1&gt;</code>, then <code>&lt;h2&gt;</code>/<code>&lt;h3&gt;</code> below it</td></tr>
+    <tr><td>Using a logo image as the only heading</td><td>Real text (add an h1, even visually hidden)</td></tr>
+  </table>
+  <p>Keep the heading order logical: <code>&lt;h1&gt;</code> then <code>&lt;h2&gt;</code> for
+     sections, <code>&lt;h3&gt;</code> for sub-sections. That outline is how machines parse
+     your page's structure.</p>
+
+  <div class="cta">
+    <strong>Added your h1?</strong><br>
+    <a href="https://airready.mujinlabs.com/">Re-grade your site →</a>
+  </div>
+  <footer>
+    <a href="/guides">← All guides</a> · by <a href="https://github.com/mujinlabs">Mujin Labs</a> ·
+    part of the free <a href="https://airready.mujinlabs.com/">AI-Readiness Grader</a>
+  </footer>
+</div>
+</body>
+</html>

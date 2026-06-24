@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to add a sitemap.xml so AI crawlers find every page (copy-paste) — airready</title>
+<meta name="description" content="A sitemap.xml lists every URL on your site so AI crawlers and search bots discover all your pages. How to generate one, where to put it, and how to reference it in robots.txt.">
+<link rel="canonical" href="https://airready.mujinlabs.com/guides/sitemap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Add a sitemap.xml so crawlers find every page">
+<meta property="og:description" content="List every URL so AI crawlers and search bots discover all your pages. Copy-paste example + robots.txt reference.">
+<meta property="og:url" content="https://airready.mujinlabs.com/guides/sitemap">
+<meta property="og:image" content="https://airready.mujinlabs.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://airready.mujinlabs.com/og.png">
+<style>
+  :root{color-scheme:dark}*{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:#0d1117;color:#e6edf3;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 20px 90px}
+  h1{font-size:30px;margin:0 0 6px}h2{font-size:21px;margin:34px 0 10px}
+  .crumb{color:#6e7781;font-size:14px;margin-bottom:18px}
+  .weight{display:inline-block;background:#1c2230;border:1px solid #30363d;color:#9aa4af;font-size:13px;padding:2px 10px;border-radius:20px;margin-bottom:16px}
+  pre{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;overflow:auto;font-size:13px;line-height:1.5}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  a{color:#79c0ff}p{margin:0 0 14px}table{border-collapse:collapse;width:100%;font-size:14px}
+  td,th{border-bottom:1px solid #21262d;padding:8px 6px;text-align:left}
+  .cta{margin-top:36px;padding:20px;background:#161b22;border:1px solid #30363d;border-radius:12px;text-align:center}
+  .cta a{display:inline-block;margin-top:8px;padding:11px 20px;background:#6e40c9;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+  footer{margin-top:44px;color:#6e7781;font-size:14px}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/guides">Guides</a> / sitemap.xml</div>
+  <h1>A <code>sitemap.xml</code> so crawlers find every page</h1>
+  <div class="weight">Worth +8 points · helps crawlers discover all your URLs</div>
+
+  <p>A sitemap is a plain XML file listing every URL you want crawled. AI and search
+     crawlers don't always find pages by following links — a sitemap hands them the
+     complete list directly, so nothing important gets missed. It's the cheapest way to
+     make sure every page you've written is discoverable.</p>
+
+  <h2>Copy-paste: a minimal sitemap.xml</h2>
+  <p>Put this at <code>https://yourdomain.com/sitemap.xml</code> and list one
+     <code>&lt;url&gt;</code> per page:</p>
+  <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;&lt;loc&gt;https://yourdomain.com/&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://yourdomain.com/about&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://yourdomain.com/blog/first-post&lt;/loc&gt;&lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+
+  <h2>Point robots.txt at it</h2>
+  <p>Add one line to <code>robots.txt</code> so crawlers find the sitemap automatically:</p>
+  <pre><code>Sitemap: https://yourdomain.com/sitemap.xml</code></pre>
+
+  <h2>Don't hand-write it</h2>
+  <p>Most platforms generate a sitemap for you: Next.js, Astro, Hugo and WordPress
+     (via Yoast or Rank Math) all output <code>sitemap.xml</code> automatically — just
+     enable it. For a static site, a build-time generator keeps it in sync as you add
+     pages, so it never goes stale.</p>
+
+  <div class="cta">
+    <strong>Published your sitemap?</strong><br>
+    <a href="https://airready.mujinlabs.com/">Re-grade your site →</a>
+  </div>
+  <footer>
+    <a href="/guides">← All guides</a> · by <a href="https://github.com/mujinlabs">Mujin Labs</a> ·
+    part of the free <a href="https://airready.mujinlabs.com/">AI-Readiness Grader</a>
+  </footer>
+</div>
+</body>
+</html>
